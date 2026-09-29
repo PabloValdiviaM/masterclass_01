@@ -1,14 +1,20 @@
 :root {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --bg: #0b0f19;
-  --sidebar-bg: #111827;
-  --card-bg: #1a2234;
-  --border: #26334d;
+  --primary: #f59e0b;
+  --primary-hover: #d97706;
+  --bg: #070b13;
+  --surface: #0e1524;
+  --sidebar-bg: #0b101c;
+  --card-bg: #111827;
+  --card-hover: #162032;
+  --border: #1e293b;
+  --border-light: #2d3b55;
   --text: #f8fafc;
   --text-muted: #94a3b8;
+  --text-dim: #64748b;
   --success: #10b981;
   --danger: #ef4444;
+  --blue: #38bdf8;
+  --brand-blue: #2563eb;
 }
 
 * {
@@ -23,6 +29,7 @@ body {
   color: var(--text);
   line-height: 1.5;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -35,4 +42,16 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.25s ease-out;
 }

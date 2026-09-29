@@ -1,6 +1,73 @@
 ---
 // apps/ecommerce/src/pages/index.astro
-const title = "Bienvenidos a NextCollege";
+const title = "NextCollege Rapid • Rey de las Hamburguesas a la Parrilla";
+
+const burgers = [
+  {
+    id: 101,
+    name: "Rey de las hamburguesas a la parrilla",
+    category: "A la Parrilla",
+    size: "Doble XXL (350g)",
+    price: 14.99,
+    rating: "4.9",
+    reviews: 342,
+    badge: "🔥 Más Vendida",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80",
+    description: "Carne 100% Angus flameada a la leña de roble, queso cheddar añejo fundido, cebolla caramelizada al bourbon y panceta crocante.",
+    ingredients: ["Carne Angus 350g", "Queso Cheddar Añejo", "Cebolla al Bourbon", "Panceta Ahumada", "Pan Brioche Artesanal", "Salsa Secreta Ahumada"],
+    calories: "920 kcal",
+    protein: "54g",
+    allergens: ["Gluten", "Lácteos"]
+  },
+  {
+    id: 102,
+    name: "Hamburguesa Real",
+    category: "Smash Grill",
+    size: "Clásica Smash (220g)",
+    price: 11.50,
+    rating: "4.8",
+    reviews: 218,
+    badge: "👑 Sabor Clásico",
+    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&auto=format&fit=crop&q=80",
+    description: "Doble medallón smash con costra caramelizada, queso americano fundido, pepinillos agridulces y aderezo imperial.",
+    ingredients: ["Doble Medallón Smash 220g", "Doble Queso Americano", "Pepinillos Agridulces", "Cebolla Picada", "Mostaza Dijon", "Salsa Real"],
+    calories: "740 kcal",
+    protein: "42g",
+    allergens: ["Gluten", "Lácteos", "Mostaza"]
+  },
+  {
+    id: 103,
+    name: "Hamburguesa Royal Crispy",
+    category: "Pollo Crujiente",
+    size: "Crispy Supreme (280g)",
+    price: 12.99,
+    rating: "4.9",
+    reviews: 195,
+    badge: "🍗 100% Crujiente",
+    image: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=800&auto=format&fit=crop&q=80",
+    description: "Pechuga marinada en suero de leche 24h y 11 especias secretas, ensalada coleslaw fresca con manzana y emulsión honey mustard.",
+    ingredients: ["Pechuga Crujiente 280g", "Coleslaw de Manzana", "Honey Mustard Casero", "Pepinillos Finos", "Pan de Papa Dorado"],
+    calories: "810 kcal",
+    protein: "48g",
+    allergens: ["Gluten", "Lácteos", "Huevo"]
+  },
+  {
+    id: 104,
+    name: "HamburguesaDouble Whopper",
+    category: "Gigantes XXL",
+    size: "Gigante Monster (400g)",
+    price: 15.50,
+    rating: "5.0",
+    reviews: 410,
+    badge: "💥 Doble Fuego XXL",
+    image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop&q=80",
+    description: "Doble medallón gigante a la parrilla de carbón vivo, lechuga romana, tomate maduro, aros de cebolla morada y salsa tártara de la casa.",
+    ingredients: ["Doble Medallón a la Brasa 400g", "Queso Cheddar Doble", "Lechuga Romana Fresca", "Tomate Maduro", "Cebolla Morada", "Salsa Tártara Especial"],
+    calories: "1050 kcal",
+    protein: "62g",
+    allergens: ["Gluten", "Lácteos", "Huevo"]
+  }
+];
 ---
 
 <!DOCTYPE html>
@@ -9,126 +76,1200 @@ const title = "Bienvenidos a NextCollege";
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
+  <meta name="description" content="NextCollege Rapid: La primera cadena gourmet de hamburguesas a la leña y smash con pedidos ultrarrápidos vía PWA." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090d16;
+      --bg: #070b13;
+      --bg-surface: #0e1524;
       --card: #131b2e;
+      --card-hover: #19233c;
       --border: #1e293b;
+      --border-accent: rgba(245, 158, 11, 0.3);
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --primary: #2563eb;
+      --text-dim: #64748b;
+      --primary: #f59e0b;
+      --primary-hover: #d97706;
+      --flame: #ff5722;
+      --accent-blue: #38bdf8;
+      --brand-blue: #2563eb;
+      --success: #10b981;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(37, 99, 235, 0.08) 50%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 11, 19, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
+      justify-content: space-between;
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(37, 99, 235, 0.1);
-      border: 1px solid rgba(37, 99, 235, 0.3);
-      color: #38bdf8;
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1.25rem;
-      background: linear-gradient(135deg, #ffffff 40%, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    p {
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-    }
-    .nav-cards {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 700px;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 1.25rem 1.75rem;
-      border-radius: 1rem;
-      text-decoration: none;
-      color: var(--text);
+
+    .brand {
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
       font-weight: 600;
-      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-admin {
+      background: rgba(30, 41, 59, 0.8);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.55rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-admin:hover {
+      background: var(--card);
+      color: var(--text);
+      border-color: #334155;
+    }
+
+    .btn-pwa-nav {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: #000;
+      font-weight: 800;
+      padding: 0.55rem 1.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-pwa-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+    }
+
+    /* Main Container */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4.5rem 1rem 3.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #ffffff 30%, #f1f5f9 60%, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 2.25rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: #070b13;
+      padding: 0.9rem 2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
       transition: all 0.2s;
     }
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(245, 158, 11, 0.6);
     }
-    footer {
-      margin-top: 4rem;
+
+    .btn-secondary {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.9rem 1.8rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--card-hover);
+      border-color: #334155;
+      transform: translateY(-2px);
+    }
+
+    /* Trust Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      padding: 1.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 4.5rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #fbbf24;
+      line-height: 1.2;
+    }
+
+    .stat-label {
       font-size: 0.85rem;
       color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    /* Catalog Section */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-tag {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Burgers Grid */
+    .burgers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 4rem;
+    }
+
+    .burger-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .burger-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(245, 158, 11, 0.15);
+    }
+
+    .burger-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 230px;
+      overflow: hidden;
+      background: #090d16;
+    }
+
+    .burger-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .burger-card:hover .burger-img {
+      transform: scale(1.06);
+    }
+
+    .card-top-badges {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .floating-badge {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fbbf24;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+    }
+
+    .rating-badge {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #f8fafc;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .burger-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    /* Size Badge requirement */
+    .size-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      align-self: flex-start;
+      letter-spacing: 0.02em;
+    }
+
+    .burger-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 0.6rem;
+    }
+
+    .burger-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    .card-footer-box {
+      border-top: 1px solid var(--border);
+      padding-top: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .price-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    .price-amount {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fbbf24;
+      line-height: 1;
+    }
+
+    /* Required "Ver Detalles" Button */
+    .btn-details {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      padding: 0.65rem 1.1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-details:hover {
+      background: #f59e0b;
+      color: #070b13;
+      border-color: #f59e0b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Details Modal (Native Dialog with accessible overlay) */
+    dialog#detail-modal {
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      max-width: 580px;
+      width: 90%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      color: var(--text);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(245, 158, 11, 0.2);
+      padding: 0;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    dialog#detail-modal::backdrop {
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-header-img {
+      position: relative;
+      height: 220px;
+      width: 100%;
+    }
+
+    .modal-header-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+    }
+
+    .modal-badges {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-price {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fbbf24;
+    }
+
+    .modal-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 0.6rem;
+    }
+
+    .ingredients-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredient-tag {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .nutrition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .nutrition-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    .nutrition-lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 0.15rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-order-modal {
+      flex: 1;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: #070b13;
+      padding: 0.85rem;
+      border-radius: 10px;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-close-modal {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1.25rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Value Pillars Section */
+    .features-section {
+      margin-top: 4rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* PWA Banner */
+    .pwa-banner {
+      margin-top: 4rem;
+      background: linear-gradient(135deg, #131b2e 0%, #1e1b4b 100%);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .pwa-content h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .pwa-content p {
+      color: var(--text-muted);
+      max-width: 540px;
+      font-size: 1rem;
+    }
+
+    .pwa-badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: #05080e;
+      padding: 3rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #fbbf24;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hero {
+        padding: 3rem 0 2rem;
+      }
+      .features-section {
+        padding: 2rem 1.25rem;
+      }
+      .pwa-banner {
+        padding: 2rem 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="badge">🚀 Scaffold Base &bull; MasterClass CI/CD</div>
-  <h1>Bienvenidos a NextCollege</h1>
-  <p>
-    Plataforma base lista para desarrollo acelerado con Inteligencia Artificial y Entrega Continua en Dokploy.
-  </p>
+  <div class="ambient-glow"></div>
 
-  <div class="nav-cards">
-    <a href="/app" class="card">
-      <span style="font-size: 1.5rem;">📱</span>
-      <div style="text-align: left;">
-        <div>Ver PWA Mobile</div>
-        <small style="color: var(--text-muted); font-size: 0.75rem;">/app</small>
-      </div>
-    </a>
-    <a href="/admin" class="card">
-      <span style="font-size: 1.5rem;">⚙️</span>
-      <div style="text-align: left;">
-        <div>Panel Administrativo</div>
-        <small style="color: var(--text-muted); font-size: 0.75rem;">/admin</small>
-      </div>
-    </a>
-    <a href="/api/health" class="card">
-      <span style="font-size: 1.5rem;">🩺</span>
-      <div style="text-align: left;">
-        <div>Health Check API</div>
-        <small style="color: var(--text-muted); font-size: 0.75rem;">/api/health</small>
-      </div>
-    </a>
-  </div>
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">🔥</div>
+        <div class="brand-text">
+          <h1>NextCollege Rapid</h1>
+          <span>Burgers &middot; Grill &middot; Speed</span>
+        </div>
+      </a>
 
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+          <li><a href="#parrilla" class="nav-link">La Parrilla</a></li>
+          <li><a href="/app" class="nav-link">PWA Móvil</a></li>
+          <li><a href="/admin" class="nav-link">Panel Admin</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="/admin" class="btn-admin" title="Ir al panel administrativo">
+          <span>⚙️ Admin</span>
+        </a>
+        <a href="/app" class="btn-pwa-nav" title="Abrir la aplicación móvil">
+          <span>📱 Pedir en la App</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="pill-badge">
+        <span>🔥</span>
+        <span>Sabor a la Parrilla 100% Angus &bull; NextCollege Rapid</span>
+      </div>
+
+      <h2 class="hero-title">
+        El Arte del Fuego y el Sabor a la <span class="highlight">Máxima Velocidad</span>
+      </h2>
+
+      <p class="hero-desc">
+        Hamburguesas maestras forjadas al calor de leña de roble y carbón seleccionado. Pide desde nuestra PWA optimizada y recibe tu orden caliente en tiempo récord.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#catalogo" class="btn-primary">
+          <span>🍔 Explorar 4 Hamburguesas Maestras</span>
+        </a>
+        <a href="/app" class="btn-secondary">
+          <span>📱 Abrir PWA Móvil</span>
+        </a>
+      </div>
+
+      <!-- Trust Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-value">18 min</div>
+          <div class="stat-label">Tiempo Promedio de Entrega</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Carne Angus Certificada</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">4.9 ★</div>
+          <div class="stat-label">Calificación de la Comunidad</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">+15,000</div>
+          <div class="stat-label">Hamburguesas Entregadas</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalog of 4 Featured Hamburgers -->
+    <section id="catalogo">
+      <div class="section-header">
+        <span class="section-tag">Colección Exclusiva</span>
+        <h3 class="section-title">Hamburguesas Destacadas</h3>
+        <p class="section-subtitle">
+          Nuestra selección maestra diseñada para satisfacer a los paladares más exigentes con ingredientes gourmet y técnicas de cocción al carbón vivo.
+        </p>
+      </div>
+
+      <div class="burgers-grid">
+        {burgers.map((b) => (
+          <article class="burger-card">
+            <div class="burger-img-wrapper">
+              <img src={b.image} alt={b.name} class="burger-img" loading="lazy" />
+              <div class="card-top-badges">
+                <span class="floating-badge">{b.badge}</span>
+                <span class="rating-badge">★ {b.rating}</span>
+              </div>
+            </div>
+
+            <div class="burger-content">
+              <!-- Requisito: Badge de tamaño -->
+              <div class="size-badge-pill">
+                <span>📏</span>
+                <span>{b.size}</span>
+              </div>
+
+              <!-- Nombre -->
+              <h4 class="burger-title">{b.name}</h4>
+
+              <!-- Descripción -->
+              <p class="burger-desc">{b.description}</p>
+
+              <!-- Footer de la Card: Requisito Precio + Botón para ver detalles -->
+              <div class="card-footer-box">
+                <div class="price-box">
+                  <span class="price-label">Precio</span>
+                  <span class="price-amount">${b.price.toFixed(2)}</span>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-details"
+                  data-burger={JSON.stringify(b)}
+                  aria-label={`Ver detalles de ${b.name}`}
+                >
+                  <span>Ver Detalles</span>
+                  <span>&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section: The Grill Craft / Pillars -->
+    <section id="parrilla" class="features-section">
+      <div class="section-header" style="margin-bottom: 1.5rem;">
+        <span class="section-tag">Nuestros Pilares</span>
+        <h3 class="section-title">El Estándar NextCollege Rapid</h3>
+        <p class="section-subtitle">
+          Combinamos tecnología de vanguardia y gastronomía artesanal para brindarte una experiencia inigualable.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🪵</div>
+          <h4 class="feature-title">Parrilla a la Leña de Roble</h4>
+          <p class="feature-text">
+            Nuestros medallones reciben el ahumado exacto gracias a leña seleccionada que sella los jugos y potencia el aroma natural de la carne.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🍞</div>
+          <h4 class="feature-title">Pan Brioche Diario</h4>
+          <p class="feature-text">
+            Horneado fresco cada mañana con masa madre y mantequilla de campo, logrando la textura esponjosa y resistente perfecta para cada mordisco.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h4 class="feature-title">Pedidos Sincronizados con PWA</h4>
+          <p class="feature-text">
+            Nuestra aplicación móvil se conecta en tiempo real a la cocina de cada sucursal para que tu hamburguesa salga directo de la parrilla a tu mesa.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🧀</div>
+          <h4 class="feature-title">Quesos Madurados</h4>
+          <p class="feature-text">
+            Cheddar añejo inglés fundido al momento sobre la carne para crear una corona dorada y untuosa con notas lácteas intensas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PWA Call to Action Banner -->
+    <section class="pwa-banner">
+      <div class="pwa-content">
+        <div class="pwa-badge">📱 NextCollege Rapid PWA Mobile</div>
+        <h2>¡Ordena en 3 clics y simula tu entrega!</h2>
+        <p>
+          Prueba nuestra Progressive Web App con seguimiento de órdenes en vivo, combos exclusivos y canje de puntos de fidelidad.
+        </p>
+      </div>
+      <div>
+        <a href="/app" class="btn-primary" style="font-size: 1.05rem;">
+          <span>📲 Iniciar App PWA Mobile</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Details Modal (Accessible Native Dialog) -->
+  <dialog id="detail-modal" aria-labelledby="modal-burger-title">
+    <div class="modal-header-img">
+      <img id="modal-burger-img" src="" alt="Hamburguesa" />
+      <button type="button" class="modal-close-btn" id="btn-close-x" aria-label="Cerrar modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-badges">
+        <span class="size-badge-pill" id="modal-burger-size">📏 Tamaño</span>
+        <span class="floating-badge" id="modal-burger-category">Categoría</span>
+      </div>
+
+      <h3 class="modal-title" id="modal-burger-title">Nombre de la Hamburguesa</h3>
+
+      <div class="modal-price-row">
+        <span class="modal-price" id="modal-burger-price">$0.00</span>
+        <span style="color: var(--text-muted); font-size: 0.85rem;" id="modal-burger-rating">★ 4.9 &bull; Calificación Máxima</span>
+      </div>
+
+      <p class="modal-desc" id="modal-burger-desc">Descripción detallada del producto.</p>
+
+      <div class="modal-section-title">Ingredientes Principales</div>
+      <div class="ingredients-tags" id="modal-burger-ingredients">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="modal-section-title">Información Nutricional & Alérgenos</div>
+      <div class="nutrition-grid">
+        <div>
+          <div class="nutrition-val" id="modal-burger-calories">0 kcal</div>
+          <div class="nutrition-lbl">Energía</div>
+        </div>
+        <div>
+          <div class="nutrition-val" id="modal-burger-protein">0g</div>
+          <div class="nutrition-lbl">Proteínas</div>
+        </div>
+        <div>
+          <div class="nutrition-val" id="modal-burger-allergens" style="font-size: 0.85rem; color: #f59e0b;">Sin alérgenos</div>
+          <div class="nutrition-lbl">Alérgenos</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <a href="/app" class="btn-order-modal">
+          <span>📱 Pedir esta hamburguesa en la PWA</span>
+          <span>&rarr;</span>
+        </a>
+        <button type="button" class="btn-close-modal" id="btn-close-footer">Cerrar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
   <footer>
-    NextCollege Scaffold &bull; Astro + React + Node.js + MySQL + Dokploy
+    <div class="footer-container">
+      <div class="brand" style="justify-content: center;">
+        <div class="brand-icon" style="width: 34px; height: 34px; font-size: 1.1rem;">🔥</div>
+        <div class="brand-text">
+          <h2 style="font-size: 1.1rem; color: #fff;">NextCollege Rapid</h2>
+        </div>
+      </div>
+
+      <p style="max-width: 500px; font-size: 0.82rem; color: var(--text-muted);">
+        Plataforma comercial unificada de comida rápida: Landing E-commerce (Astro), PWA Móvil (React), Dashboard Operativo (React) y Backend API (Node.js/MySQL).
+      </p>
+
+      <div class="footer-links">
+        <a href="/">🌐 E-commerce</a>
+        <span>&bull;</span>
+        <a href="/app">📱 PWA Mobile</a>
+        <span>&bull;</span>
+        <a href="/admin">⚙️ Panel Administrativo</a>
+        <span>&bull;</span>
+        <a href="/api/health">🩺 Health Check API</a>
+      </div>
+
+      <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.5rem;">
+        &copy; {new Date().getFullYear()} NextCollege Rapid &bull; Todos los derechos reservados.
+      </div>
+    </div>
   </footer>
+
+  <!-- Modal Script -->
+  <script is:inline>
+    const modal = document.getElementById('detail-modal');
+    const closeBtnX = document.getElementById('btn-close-x');
+    const closeBtnFooter = document.getElementById('btn-close-footer');
+
+    const modalImg = document.getElementById('modal-burger-img');
+    const modalTitle = document.getElementById('modal-burger-title');
+    const modalSize = document.getElementById('modal-burger-size');
+    const modalCategory = document.getElementById('modal-burger-category');
+    const modalPrice = document.getElementById('modal-burger-price');
+    const modalRating = document.getElementById('modal-burger-rating');
+    const modalDesc = document.getElementById('modal-burger-desc');
+    const modalIngredients = document.getElementById('modal-burger-ingredients');
+    const modalCalories = document.getElementById('modal-burger-calories');
+    const modalProtein = document.getElementById('modal-burger-protein');
+    const modalAllergens = document.getElementById('modal-burger-allergens');
+
+    function openModalWithBurger(burger) {
+      if (!modal) return;
+      modalImg.src = burger.image;
+      modalImg.alt = burger.name;
+      modalTitle.textContent = burger.name;
+      modalSize.textContent = `📏 ${burger.size}`;
+      modalCategory.textContent = burger.category;
+      modalPrice.textContent = `$${burger.price.toFixed(2)}`;
+      modalRating.textContent = `★ ${burger.rating} (${burger.reviews} reseñas)`;
+      modalDesc.textContent = burger.description;
+      modalCalories.textContent = burger.calories || '850 kcal';
+      modalProtein.textContent = burger.protein || '48g';
+      modalAllergens.textContent = burger.allergens ? burger.allergens.join(', ') : 'Ninguno';
+
+      modalIngredients.innerHTML = '';
+      if (burger.ingredients && burger.ingredients.length > 0) {
+        burger.ingredients.forEach(ing => {
+          const span = document.createElement('span');
+          span.className = 'ingredient-tag';
+          span.textContent = ing;
+          modalIngredients.appendChild(span);
+        });
+      }
+
+      modal.showModal();
+    }
+
+    function closeModal() {
+      if (modal && modal.open) {
+        modal.close();
+      }
+    }
+
+    document.querySelectorAll('.btn-details').forEach(button => {
+      button.addEventListener('click', () => {
+        try {
+          const raw = button.getAttribute('data-burger');
+          if (raw) {
+            const burger = JSON.parse(raw);
+            openModalWithBurger(burger);
+          }
+        } catch (e) {
+          console.error('Error parsing burger data', e);
+        }
+      });
+    });
+
+    closeBtnX?.addEventListener('click', closeModal);
+    closeBtnFooter?.addEventListener('click', closeModal);
+
+    modal?.addEventListener('click', (e) => {
+      // Close on backdrop click
+      const rect = modal.getBoundingClientRect();
+      const isInDialog = (
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width
+      );
+      if (!isInDialog) {
+        closeModal();
+      }
+    });
+  </script>
 </body>
 </html>
